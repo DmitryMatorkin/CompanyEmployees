@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NLog;
+
 namespace LoggerService
 {
     public class LoggerManager : ILoggerManager

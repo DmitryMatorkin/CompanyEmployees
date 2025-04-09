@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
+using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyEmployees.Controllers
@@ -20,25 +21,47 @@ namespace CompanyEmployees.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-        [HttpGet("{id}")]
-        public IActionResult GetEmployeeForCompany(Guid companyId, Guid id)
+        [HttpGet]
+        public IActionResult GetEmployeesForCompany(Guid companyId)
         {
             var company = _repository.Company.GetCompany(companyId, trackChanges: false);
             if (company == null)
             {
-                _logger.LogInfo($"Company with id: {companyId} doesn't exist in thedatabase.");
-            return NotFound();
+                _logger.LogInfo($"Company with id: {companyId} doesn't exist in the database.");
+                return NotFound();
             }
-            var employeeDb = _repository.Employee.GetEmployee(companyId, id,
-           trackChanges:
-            false);
-            if (employeeDb == null)
+
+            var employeesFromDb = _repository.Employee.GetEmployees(companyId, trackChanges: false);
+            var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeesFromDb);
+
+            return Ok(employeesDto);
+        }
+
+
+        [HttpPost]
+        public IActionResult CreateEmployeeForCompany(Guid companyId, [FromBody]
+EmployeeForCreationDto employee)
+        {
+            if (employee == null)
             {
-                _logger.LogInfo($"Employee with id: {id} doesn't exist in thedatabase.");
+                _logger.LogError("EmployeeForCreationDto object sent from client isnull.");
+            return BadRequest("EmployeeForCreationDto object is null");
+            }
+            var company = _repository.Company.GetCompany(companyId, trackChanges: false);
+            if (company == null)
+            {
+                _logger.LogInfo($"Company with id: {companyId} doesn't exist in the database.");
             return NotFound();
             }
-            var employee = _mapper.Map<EmployeeDto>(employeeDb);
-            return Ok(employee);
+            var employeeEntity = _mapper.Map<Employee>(employee);
+            _repository.Employee.CreateEmployeeForCompany(companyId, employeeEntity);
+            _repository.Save();
+            var employeeToReturn = _mapper.Map<EmployeeDto>(employeeEntity);
+            return CreatedAtRoute("GetEmployeeForCompany", new
+            {
+                companyId,
+                id = employeeToReturn.Id
+            }, employeeToReturn);
         }
     }
 }
