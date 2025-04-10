@@ -6,6 +6,7 @@ using Entities.DataTransferObjects;
 using Entities.Models;
 using Contracts;
 using Microsoft.AspNetCore.Mvc;
+using CompanyEmployees.ActionFilters;
 
 namespace Start;
 
@@ -24,6 +25,9 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddScoped<ValidateCompanyExistsAttribute>();
+        services.AddScoped<ValidateEmployeeForCompanyExistsAttribute>();
+        services.AddScoped<ValidationFilterAttribute>();
         services.AddAutoMapper(typeof(Startup));
         services.ConfigureCors();
         services.ConfigureIISIntegration();
