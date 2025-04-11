@@ -7,6 +7,7 @@ using Entities.Models;
 using Contracts;
 using Microsoft.AspNetCore.Mvc;
 using CompanyEmployees.ActionFilters;
+using Repository.DataShaping;
 
 namespace Start;
 
@@ -25,6 +26,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
         services.AddScoped<ValidateCompanyExistsAttribute>();
         services.AddScoped<ValidateEmployeeForCompanyExistsAttribute>();
         services.AddScoped<ValidationFilterAttribute>();
