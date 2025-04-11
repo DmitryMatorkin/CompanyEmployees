@@ -26,6 +26,8 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddAuthentication();
+        services.ConfigureIdentity();
         services.ConfigureVersioning();
         services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
         services.AddScoped<ValidateCompanyExistsAttribute>();
@@ -71,6 +73,7 @@ public class Startup
             ForwardedHeaders = ForwardedHeaders.All
         });
         app.UseRouting();
+        app.UseAuthentication();
         app.UseAuthorization();
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     }
