@@ -8,6 +8,7 @@ using Contracts;
 using Microsoft.AspNetCore.Mvc;
 using CompanyEmployees.ActionFilters;
 using Repository.DataShaping;
+using CompanyEmployees;
 
 namespace Start;
 
@@ -51,6 +52,7 @@ public class Startup
         services.AddAuthentication();
         services.ConfigureIdentity();
         services.ConfigureJWT(Configuration);
+        services.AddScoped<IAuthenticationManager, AuthenticationManager>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

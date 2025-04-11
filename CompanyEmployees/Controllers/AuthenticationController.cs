@@ -15,32 +15,29 @@ namespace CompanyEmployees.Controllers
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
+        private readonly IAuthenticationManager _authManager;
         public AuthenticationController(ILoggerManager logger, IMapper mapper,
-        UserManager<User> userManager)
+  UserManager<User> userManager, IAuthenticationManager authManager)
         {
             _logger = logger;
             _mapper = mapper;
             _userManager = userManager;
+            _authManager = authManager;
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto userForRegistration)
+        public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto
+  user)
         {
-            var user = _mapper.Map<User>(userForRegistration);
-            var result = await _userManager.CreateAsync(user,
-           userForRegistration.Password);
-            if (!result.Succeeded)
+            if (!await _authManager.ValidateUser(user))
             {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.TryAddModelError(error.Code, error.Description);
-                }
-                return BadRequest(ModelState);
+                _logger.LogWarn($"{nameof(Authenticate)}: Authentication failed. Wronguser name or password.");
+            return Unauthorized();
             }
-            await _userManager.AddToRolesAsync(user, userForRegistration.Roles);
-            return StatusCode(201);
+            return Ok(new { Token = await _authManager.CreateToken() });
         }
     }
-
 }
+
+
