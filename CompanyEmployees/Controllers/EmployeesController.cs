@@ -26,15 +26,6 @@ namespace CompanyEmployees.Controllers
             _mapper = mapper;
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetEmployees(Guid companyId, EmployeeParameters employeeParameters)
-        //{
-        //    var employees = await _repository.Employee.GetEmployeesAsync(companyId, employeeParameters, trackChanges:
-        //   false);
-        //    var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
-        //    return Ok(employeesDto);
-        //}
-
         [HttpGet]
         public async Task<IActionResult> GetEmployeesForCompany(Guid companyId,
             [FromQuery] EmployeeParameters employeeParameters)
