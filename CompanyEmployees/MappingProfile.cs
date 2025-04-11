@@ -14,9 +14,10 @@ namespace CompanyEmployes
 
             CreateMap<Employee, EmployeeDto>();
             CreateMap<CompanyForCreationDto, Company>();
-            CreateMap<EmployeeForCreationDto, Employee>(); // ✅ ВАЖНО: Добавь эту строку
+            CreateMap<EmployeeForCreationDto, Employee>(); 
             CreateMap<EmployeeForUpdateDto, Employee>().ReverseMap();
             CreateMap<CompanyForUpdateDto, Company>();
+            CreateMap<UserForRegistrationDto, User>();
         }
 
     }
