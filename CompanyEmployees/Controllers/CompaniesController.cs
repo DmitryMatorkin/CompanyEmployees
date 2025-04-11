@@ -10,6 +10,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace CompanyEmployees.Controllers
 {
+    [ApiVersion("2.0")]
     [Route("api/companies")]
     [ApiController]
     public class CompaniesController : ControllerBase
@@ -124,5 +125,11 @@ namespace CompanyEmployees.Controllers
             return NoContent();
         }
 
+        [HttpOptions]
+        public IActionResult GetCompaniesOptions()
+        {
+            Response.Headers.Add("Allow", "GET, OPTIONS, POST");
+            return Ok();
+        }
     }
 }
