@@ -39,6 +39,10 @@ namespace CompanyEmployees.Controllers
             return Ok(companiesDto);
         }
 
+        /// <summary>
+        /// Получает список компании по ID
+        /// </summary>
+        /// <returns> Список компаний</returns>
         [HttpGet("{id}", Name = "CompanyById")]
         public async Task<IActionResult> GetCompany(Guid id)
         {
@@ -55,7 +59,10 @@ namespace CompanyEmployees.Controllers
                 return Ok(companyDto);
             }
         }
-
+        /// <summary>
+        /// Получает коллекции списка компаний
+        /// </summary>
+        /// <returns> Коллекция компаний</returns>
         [HttpGet("collection/({ids})", Name = "CompanyCollection")]
         public async Task<IActionResult> GetCompanyCollection(
  [ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
@@ -100,6 +107,10 @@ namespace CompanyEmployees.Controllers
             return CreatedAtRoute("CompanyById", new { id = companyToReturn.Id },
             companyToReturn);
         }
+        /// <summary>
+        /// Создает коллекцию компаний
+        /// </summary>
+        /// <returns> Коллеция компаний</returns>
         [HttpPost("collection")]
         public async Task<IActionResult> CreateCompanyCollection(
   [FromBody] IEnumerable<CompanyForCreationDto> companyCollection)
@@ -121,6 +132,10 @@ namespace CompanyEmployees.Controllers
             return CreatedAtRoute("CompanyCollection", new { ids },
            companyCollectionToReturn);
         }
+        /// <summary>
+        /// Удаляет компанию по id
+        /// </summary>
+        /// <returns>Сообщение</returns>
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateCompanyExistsAttribute))]
         public async Task<IActionResult> DeleteCompany(Guid id)
@@ -130,7 +145,10 @@ namespace CompanyEmployees.Controllers
             await _repository.SaveAsync();
             return NoContent();
         }
-
+        /// <summary>
+        /// Обновляет данные
+        /// </summary>
+        /// <returns> Список компаний</returns>
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateCompanyExistsAttribute))]
