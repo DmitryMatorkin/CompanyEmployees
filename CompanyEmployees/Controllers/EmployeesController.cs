@@ -28,7 +28,7 @@ namespace CompanyEmployees.Controllers
             _dataShaper = dataShaper;
         }
         /// <summary>
-        /// Получает список всех сотрудников компании
+        /// Возвращает список всех сотрудников компании
         /// </summary>
         /// <returns> Список сотрудников</returns>
         [HttpGet]
@@ -94,7 +94,7 @@ namespace CompanyEmployees.Controllers
             }
         }
         /// <summary>
-        /// Удаляет сотрудника компании
+        /// Удаляет сотрудника в компании
         /// </summary>
         /// <returns> Сообщение</returns>
         [HttpDelete("{id}")]
@@ -121,7 +121,7 @@ namespace CompanyEmployees.Controllers
             return NoContent();
         }
         /// <summary>
-        /// Редактирует данные сотрудника
+        /// Обновляет данные сотрудника
         /// </summary>
         /// <returns> Сообщение</returns>
         [HttpPatch("{id}")]

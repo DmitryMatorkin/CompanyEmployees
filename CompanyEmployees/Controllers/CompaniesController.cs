@@ -27,7 +27,7 @@ namespace CompanyEmployees.Controllers
             _mapper = mapper;
         }
         /// <summary>
-        /// Получает список всех компаний
+        /// Возвращает список всех компаний
         /// </summary>
         /// <returns> Список компаний</returns>
         [HttpGet(Name = "GetCompanies"), Authorize(Roles = "Manager")]
@@ -146,7 +146,7 @@ namespace CompanyEmployees.Controllers
             return NoContent();
         }
         /// <summary>
-        /// Обновляет данные
+        /// Обновляет данные компании
         /// </summary>
         /// <returns> Список компаний</returns>
         [HttpPut("{id}")]
