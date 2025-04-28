@@ -107,7 +107,7 @@ namespace CompanyEmployees.Controllers
             return NoContent();
         }
         /// <summary>
-        /// Обновляет данные о сотруднике
+        /// Обновляет данные о сотруднике в компании
         /// </summary>
         /// <returns> Сообщение</returns>
         [HttpPut("{id}")]
@@ -121,7 +121,7 @@ namespace CompanyEmployees.Controllers
             return NoContent();
         }
         /// <summary>
-        /// Обновляет данные сотрудника
+        /// Обновляет данные сотрудника в компании
         /// </summary>
         /// <returns> Сообщение</returns>
         [HttpPatch("{id}")]

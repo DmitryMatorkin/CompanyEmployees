@@ -40,7 +40,7 @@ namespace CompanyEmployees.Controllers
         }
 
         /// <summary>
-        /// Получает список компании по ID
+        /// Возвращает список компании по ID
         /// </summary>
         /// <returns> Список компаний</returns>
         [HttpGet("{id}", Name = "CompanyById")]
@@ -60,7 +60,7 @@ namespace CompanyEmployees.Controllers
             }
         }
         /// <summary>
-        /// Получает коллекции списка компаний
+        /// Возвращает коллекции списка компаний
         /// </summary>
         /// <returns> Коллекция компаний</returns>
         [HttpGet("collection/({ids})", Name = "CompanyCollection")]
